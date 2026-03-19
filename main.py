@@ -75,20 +75,21 @@ if (app_login_user_name==app_login_user_name_input) and (app_login_password==app
                         json.dump(app_login_info,file)
                     with open("locker.json","w") as file:
                         json.dump([],file)    
-                    print("Program reseted successfully! Now restart your program.")
+                    print("Program reseted successfully!")
                     display_line()
                     break
                 else:
                     display_space()
                     print(f"Authentication Failed. Incorrect password.")
                     display_line()
-                            
+            break                
         #condition for option 8
         elif option==8:
             display_space()
             print("Program exited successfully!")
             display_line()
             break
+        #else condition
         else:
             display_space()
             print(f"Invalid input!")
