@@ -1,4 +1,6 @@
 import json
+import random
+import string
 #display functions
 def display_line():
     print(f"{"-"*32}")
@@ -171,12 +173,67 @@ if (app_login_user_name==app_login_user_name_input) and (app_login_password==app
                     display_line()
                     continue    
 
-
+        #condition for option 3
         elif option==3:
             display_space()
+            search_account=input("Enter website name to search: ").lower()
+            index=0
+            check=0
+            while 0<=index<len(locker):
+                if locker[index]["website_name"].lower()==search_account:
+                    check+=1
+                    display_space()
+                    print(f"Website: {locker[index]['website_name']}")
+                    print(f"Username or Email: {locker[index]['username_or_email']}")
+                    print(f"Password: {locker[index]['account_password']}")
+                    display_line_parameter(42)
+                index+=1    
+            if check==0:
+                display_space()
+                print("No match found!")
+                display_line()
+                break
 
-
-
+        #condition for option 4
+        elif option==4:
+            random_char=string.ascii_letters+string.digits+string.punctuation
+            random_password=random.choice(random_char)
+            value=str()
+            for item in range(1,12,1):
+                value+=random_password
+                random_password=random.choice(random_char)
+            display_space()
+            print(f"{'Index':<12}{'Website':<12}{'Username or Email':<12}")
+            index=0
+            display_line_parameter(52)
+            while index<len(locker):
+                print(f"{index:<12}{locker[index]['website_name']:<12}{locker[index]['username_or_email']:<12}")
+                display_line_parameter(52)
+                index+=1
+            print("Random password generated!")
+            try:    
+                display_space()
+                update_account_pass=int(input("Enter index to update account password: "))
+            except ValueError:
+                display_space()
+                print("index must be a integer!")
+                display_line()
+                continue   
+            if 0<=update_account_pass<len(locker):
+                display_space()
+                print(f"Website: {locker[update_account_pass]['website_name']}")
+                print(f"Username or Email: {locker[update_account_pass]['username_or_email']}")
+                print(f"Old Password: {locker[update_account_pass]['account_password']}")
+                locker[update_account_pass]["account_password"]=value
+                with open("locker.json","w") as file:
+                    json.dump(locker,file)
+                print(f"Password updated successfully!")    
+                display_line_parameter(42)
+            else:
+                display_space()
+                print(f"Invalid input!")
+                display_line()
+                continue
 
         #condition for option 5
         elif option==5:
